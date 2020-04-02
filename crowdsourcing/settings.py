@@ -26,21 +26,23 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1:8000', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'account.apps.AccountConfig',
-    'posts.apps.PostsConfig',
+    'projects.apps.ProjectsConfig',
 
     'django.contrib.humanize',
 
     'crispy_forms',
     'tinymce',
     'qurl_templatetag',
+    'qrcode',
 
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -170,7 +174,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'post-list'
+LOGIN_REDIRECT_URL = 'project-list'
 LOGIN_URL = 'login'
 
-DATA_UPLOAD_MAX_NUMBER_FIELDS = 1000
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
