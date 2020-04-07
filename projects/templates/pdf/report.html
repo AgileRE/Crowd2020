@@ -1,0 +1,95 @@
+{% load qr_tags %}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Verification Report</title>
+        <style type="text/css">
+            body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+            #table {
+                border: 1px solid #000;
+            }
+            .header {
+                font-size: 20px;
+                font-weight: 100;
+                text-align: center;
+                color: #007cae;
+            }
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #007cae;
+            }
+            .details {
+                padding: 10px 20px 0px 20px;
+                text-align: left !important;
+                /*margin-left: 40%;*/
+            }
+            .hrItem {
+                border: none;
+                height: 1px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+            .widget.categories .item {
+              background: #fafafa;
+              padding: 10px;
+              color: #777;
+              font-weight: 700;
+            }
+
+            .widget.categories .item:nth-of-type(2n+2) {
+              background: none;
+            }
+
+            .widget.categories .item p {
+              color: inherit;
+              font-size: 0.95em;
+              text-transform: capitalize;
+            }
+        </style>
+    </head>
+    <body>
+        <div class='wrapper'>
+            <div class='header'>
+                <table id="table">
+                <tr>
+                    <td><p class='title'>Report Requirement</p>
+                        <p>{{ title }}</p>
+                    </td>
+                    <td style="text-align: right; width: 15%;">{% qr_from_object object 's' %}</td>
+                </tr>
+                </table>
+
+                
+                
+            </div>
+
+        <div>
+
+        <hr class='hrItem' />
+        </br>
+    
+
+        <div class='details'>
+
+            <div class="widget categories">
+                {% for q in queryset %}
+                <div class="item d-flex justify-content-between">
+                    <p>{{ q }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    </body>
+</html>
