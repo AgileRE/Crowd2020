@@ -1,0 +1,31 @@
+{% load static %}
+<header id="header" class="header-scrolled">
+    <div class="container-fluid">
+
+      <div id="logo" class="pull-left">
+        <h1 class="scrollto">
+          <a href="{% url 'project-list' %}">CROWDSOURCING</a>
+        </h1>
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="{% url 'project-list' %}">Project</a>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item"><a href="{% url 'project-create' %}">Posting</a>
+          </li>
+          <li class="nav-item"><a href="{% url 'profile' %}">Profile</a>
+          </li>
+          <li class="nav-item"><a href="{% url 'logout' %}">Log Out</a>
+          </li>
+          {% else %}
+          <li class="nav-item"><a href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item"><a href="{% url 'register' %}">Register</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </header><!-- #header -->

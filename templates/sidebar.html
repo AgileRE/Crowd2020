@@ -1,0 +1,46 @@
+{% load qurl %}
+
+<aside class="col-lg-4">
+    <!-- Widget [Search Bar Widget]-->
+    <div class="widget search">
+    <header>
+        <h3 class="h6">Search</h3>
+    </header>
+    <form action="{% url 'search' %}" class="search-form">
+        <div class="form-group">
+        <input type="text" name="q" placeholder="What do you want to look for ?">
+        <button type="submit" class="submit"><i class="icon-search"></i></button>
+        </div>
+    </form>
+    </div>
+    <!-- Widget [Latest projects Widget]        -->
+    <div class="widget latest-posts">
+    <header>
+        <h3 class="h6">Latest Projects</h3>
+    </header>
+    <div class="procurement-posts">
+        {% for project in most_recent %}
+        <a href="{{ post.get_absolute_url }}">
+            <div class="item d-flex align-items-center">
+            <div class="title"><strong>{{ project.title|truncatechars:80 }}</strong>
+                <div class="d-flex align-items-center">
+                <div class="views"><i class="icon-eye"></i> {{ project.view_count }}</div>
+                <div class="comments meta-last"><i class="icon-comment"></i>{{ project.requirement_count }}</div>
+                </div>
+            </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    <!-- Widget [Categories Widget]-->
+    <div class="widget categories">
+    <header>
+        <h3 class="h6">Categories</h3>
+    </header>
+    {% for cat in category_count %}
+    <div class="item d-flex justify-content-between">
+        <a href="{% qurl '/search-categorie/?page=1' q=cat.categories__title page=None %}">{{ cat.categories__title }}</a><span>{{ cat.categories__title__count }}</span>
+    </div>
+    {% endfor %}
+    </div>
+</aside>

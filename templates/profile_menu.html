@@ -1,0 +1,26 @@
+{% load static %}
+
+{% load qurl %}
+
+<aside class="col-lg-4">
+    <!-- Widget [Categories Widget]-->
+    <div class="widget categories">
+    <header>
+        <h3 class="h6">Menu</h3>
+    </header>
+    <div class="item d-flex justify-content-between">
+        <a href="{% url 'profile' %}">Profile</a>
+    </div>
+    <div class="item d-flex justify-content-between">
+        <a href="{% url 'search-profile-project' %}">My Project</a>
+    </div>
+    <div class="item d-flex justify-content-between">
+        <a href="{% qurl '/search-categorie/?page=1' q=cat.categories__title page=None %}">Like</a>
+    </div>
+    <div class="item d-flex justify-content-between">
+        <a href="{% qurl '/search-categorie/?page=1' q=cat.categories__title page=None %}">Contribution</a>
+    </div>
+    </div>
+    </div>
+    </div>
+</aside>

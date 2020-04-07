@@ -1,0 +1,100 @@
+{% extends 'base_blog.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+  .post-body img {
+    width: 100%;
+  }
+</style>
+
+    <div class="container">
+      <div class="row">
+        <!-- Latest Project -->
+        <main class="post blog-post col-lg-8">
+          <div class="container">
+            <div class="post-single">
+              <div class="post-details">
+                <div class="post-meta d-flex justify-content-between">
+                  <div class="category">
+                    {% for cat in project.categories.all %}
+                    <a href="#">{{ cat }}</a>
+                    {% endfor %}
+                  </div>
+                  {% if project.profile.user.id == request.user.id %}
+                  <div class="category d-flex align-items-end">
+                    <a href="{% url 'project-update' pk=project.pk %}">Update</a>
+                  </div>
+                  {% endif %}
+                </div>
+                {% if project.thumbnail %}
+              <div class="post-thumbnail"><img src="{{ project.thumbnail.url }}" alt="..." class="img-fluid"></div>
+              {% endif %}
+                <h1>{{ project.title }}</h1>
+                <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
+                    <div class="avatar"><img src="{{ project.profile.image.url }}" alt="..." class="img-fluid"></div>
+                    <div class="title"><span>{{ project.profile.user.username }}</span></div></a>
+                  <div class="d-flex align-items-center flex-wrap">
+                    <div class="date"><i class="icon-clock"></i> {{ project.timestamp }}</div>
+                    <div class="views"><i class="icon-eye"></i> {{ project.view_count }}</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>{{ project.requirement_count }}</div>
+                  </div>
+                </div>
+                <div class="post-body" style="text-align: justify;">
+                  {{ project.content | safe }}
+                </div>
+
+                <div class="post-comments">
+                  <header>
+                    <h3 class="h6">Requirement Project<span class="no-of-comments">({{ project.requirements.count }})</span></h3>
+                  </header>
+                  {% for requirement in project.get_requirements %}
+                  <div class="comment">
+                    <div class="comment-header d-flex justify-content-between">
+                      <div class="user d-flex align-items-center">
+                        <div class="image">
+                          {% if requirement.user.profile %}
+                          <img src="{{ requirement.user.profile.image.url }}" alt="..." class="img-fluid rounded-circle" style="width: 40px;">
+                          {% endif %}
+                        </div>
+                        <div class="title"><strong>{{ requirement.user.username }}</strong><span class="date">{{ requirement.timestamp|timesince }} ago</span></div>
+                      </div>
+                    </div>
+                    <div class="comment-body">
+                      <p>{{ requirement.content }}</p>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+                {% if not project.status_open %}
+                <a href="{% url 'project-list' %}" class="btn btn-primary">This project has been closed</a>
+                {% elif request.user.is_authenticated %}
+                <div class="add-comment">
+                  <header>
+                    <h3 class="h6">Give requirements</h3>
+                  </header>
+                  <form method="POST" action="." class="commenting-form">
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                        {{ form_req }}
+                      </div>
+                      <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-secondary">Send</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary">Login untuk komentar</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </main>
+        {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+      </div>
+    </div>
+
+{% endblock content %}
