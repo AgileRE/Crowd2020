@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project, Requirement
+from .models import Project, Requirement, RequirementCategory
 from tinymce import TinyMCE
 
 class TinyMCEWidget(TinyMCE):
@@ -27,6 +27,8 @@ class RequirementForm(forms.ModelForm):
         'id': 'userrequirement',
         'rows': 2
     }), label="")
+    category = forms.ChoiceField(choices=RequirementCategory.RCategories, required=True )
+    choose= forms.ChoiceField(choices=RequirementCategory.Categories2, required=True )
     class Meta:
         model = Requirement
-        fields = ('content', )
+        fields = ('content', 'category','choose')

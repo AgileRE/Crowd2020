@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 
 from .forms import RequirementForm, ProjectForm
-from .models import Project, Profile, ProjectView, Requirement
+from .models import Project, Profile, ProjectView, Requirement, RequirementCategory
 from .utils import render_to_pdf
 from account.models import Signup, Account
 
