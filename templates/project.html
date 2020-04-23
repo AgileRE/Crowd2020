@@ -84,14 +84,13 @@
                   {% for requirement in project.get_requirements %}
                   <div class="comment">
                     <div class="comment-header d-flex justify-content-between">
+                      {% if requirement.user.id == request.user.id %}
                       <div class="user d-flex align-items-center">
                         <div class="image">
-                          {% if requirement.user.profile %}
                           <img src="{{ requirement.user.profile.image.url }}" alt="..." class="img-fluid rounded-circle" style="width: 40px;">
-                          {% endif %}
                         </div>
-                        <div class="title">
-                          <strong>{{ requirement.user.username }}</strong>
+                        <div class="title"><strong>{{ requirement.user.username }}</strong>
+                          
                           <div class="categorie d-flex align-items-end">
                             <span class="date">{{ requirement.timestamp|timesince }} ago</span>
                             <span>&nbsp &nbsp &nbsp</span>
@@ -102,6 +101,19 @@
                       <header>
                         <h3 class="h6">Category is : #<span class="categories">{{requirement.category }}</span><span>_{{requirement.choose }}</span></h3>
                       </header>
+                      {% else %}
+                      <div class="user d-flex align-items-center">
+                        <div class="image">
+                          <img src="{{ requirement.user.profile.image.url }}" alt="..." class="img-fluid rounded-circle" style="width: 40px;">
+                        </div>
+                        <div class="title"><strong>{{ requirement.user.username }}</strong>
+                          <span class="date">{{ requirement.timestamp|timesince }} ago</span>
+                        </div>
+                      </div>
+                      <header>
+                        <h3 class="h6">Category is : #<span class="categories">{{requirement.category }}</span><span>_{{requirement.choose }}</span></h3>
+                      </header>
+                      {% endif %}
                     </div>
                     <div class="comment-body">
                       <p>{{ requirement.content }}</p>
