@@ -9,10 +9,10 @@ def decline_requirement(modeladmin,request,queryset):
     queryset.update(status='D')
 
 class RequirementAdmin(admin.ModelAdmin):
-    list_display = ('user','timestamp','project','status','category','choose',)
+    list_display = ('user','timestamp','project','status','choose','category',)
     actions=[approve_requirement, decline_requirement]
     search_fields = ('user__username', 'timestamp','project__title')
-    readonly_fields=('user', 'timestamp','content','project','category','choose',)
+    # readonly_fields=('user', 'timestamp','content','project','category','choose',)
 
     filter_horizontal = ()
     list_filter = ()

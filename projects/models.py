@@ -63,8 +63,7 @@ class Category(models.Model):
 class RequirementCategory(models.Model):
     RCategories = (
     ('Functional', 'Functional'),
-    ('NonFunctional', 'Non functional'),
-    ('Others', 'Others'),)
+    ('NonFunctional', 'Non functional'),)
     Categories2 = (
     ('UserRequirement', 'User Requirement'),
     ('SystemRequirement', 'System Requirement'),)

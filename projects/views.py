@@ -246,8 +246,16 @@ def get_pdf(request, pk, slug):
     if uid:
         if q.exists():
             qn = q.filter(status='A')
+            sn = qn.filter(choose='SystemRequirement', category='NonFunctional')
+            sf = qn.filter(choose='SystemRequirement', category='Functional')
+            un = qn.filter(choose='UserRequirement', category='NonFunctional')
+            uf = qn.filter(choose='UserRequirement', category='Functional')
+
             data = {
-                'queryset': qn,
+                'sn' : sn,
+                'sf' : sf,
+                'un' : un,
+                'uf' : uf,
                 'title' : uid.title,
                 'overview' : uid.overview,
                 'object': uid,

@@ -320,20 +320,22 @@
                 </td>
             </tr>
         </table>
+        <h1 style="font-size: 1.2em">System Requirements</h1>
         <div class="container">
+            {% if sf %}
             <div class="table-wrapper">
                 <table>
                     <tbody class="body">
                         <tr>
                             <tr>
-                            <th class="total" colspan="2">Functional Requirements</th>
+                            <th class="total" colspan="3">Functional Requirements</th>
                             <th class="total">Approved Date</th>
                             <th class="total">Contributed</th>
                         </tr>
-                        {% for q in queryset %}
+                        {% for q in sf %}
                         <tr>
                             <td class="no">{{ forloop.counter }}</td>
-                            <td class="desc">{{ q }}</td>
+                            <td class="desc" colspan="2">{{ q }}</td>
                             <td class="unit">{{ q.updated }}</td>
                             <td class="unit">{{ q.user.username }}</td>
                         </tr>
@@ -341,28 +343,79 @@
                     </tbody>
                 </table>
             </div>
-            <div class="no-break">
-                <table class="grand-total">
-                    <tbody>
+            {% endif %}
+            {% if sn %}
+            <div class="table-wrapper">
+                <table>
+                    <tbody class="body">
                         <tr>
-                            <td class="no"></td>
-                            <td class="desc"></td>
-                            <td colspan="2">Functional:</td>
-                            <td class="total">{{ queryset.count }}</td>
+                            <tr>
+                            <th class="total" colspan="3">Non-Functional Requirements</th>
+                            <th class="total">Approved Date</th>
+                            <th class="total">Contributed</th>
                         </tr>
+                        {% for q in sn %}
                         <tr>
-                            <td class="no"></td>
-                            <td class="desc"></td>
-                            <td colspan="2">Non-Functional:</td>
-                            <td class="total">-</td>
+                            <td class="no">{{ forloop.counter }}</td>
+                            <td class="desc" colspan="2">{{ q }}</td>
+                            <td class="unit">{{ q.updated }}</td>
+                            <td class="unit">{{ q.user.username }}</td>
                         </tr>
-                        <tr>
-                            <td class="grand-total" colspan="5"><div><span>Project System Requirements Total &nbsp:</span>&nbsp &nbsp &nbsp &nbsp &nbsp {{ queryset.count }} &nbsp &nbsp</div></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
+            {% endif %}
         </div>
+        <br><br>
+        <h1 style="font-size: 1.2em">User Requirements</h1>
+        <div class="container">
+            {% if uf %}
+            <div class="table-wrapper">
+                <table>
+                    <tbody class="body">
+                        <tr>
+                            <tr>
+                            <th class="total" colspan="3">Functional Requirements</th>
+                            <th class="total">Approved Date</th>
+                            <th class="total">Contributed</th>
+                        </tr>
+                        {% for q in uf %}
+                        <tr>
+                            <td class="no">{{ forloop.counter }}</td>
+                            <td class="desc" colspan="2">{{ q }}</td>
+                            <td class="unit">{{ q.updated }}</td>
+                            <td class="unit">{{ q.user.username }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+            {% if un %}
+            <div class="table-wrapper">
+                <table>
+                    <tbody class="body">
+                        <tr>
+                            <tr>
+                            <th class="total" colspan="3">Non-Functional Requirements</th>
+                            <th class="total">Approved Date</th>
+                            <th class="total">Contributed</th>
+                        </tr>
+                        {% for q in un %}
+                        <tr>
+                            <td class="no">{{ forloop.counter }}</td>
+                            <td class="desc" colspan="2">{{ q }}</td>
+                            <td class="unit">{{ q.updated }}</td>
+                            <td class="unit">{{ q.user.username }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+        <br><br><br>
     </section>
 
     <footer>
