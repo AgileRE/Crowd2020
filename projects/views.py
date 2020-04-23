@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.views.generic import View, ListView, DetailView, CreateView, UpdateView
+from django.views.generic import View, ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
@@ -190,22 +190,70 @@ class ProjectUpdateView(UpdateView):
         }))
 
 
-def get_pdf(request, pk):
-    uid = Project.objects.get(id__iexact=pk)
+class RequirementDeleteView(DeleteView):
+    model = Requirement
+    template_name = 'requirement_confirm_delete.html'
+
+    def get_success_url(self):
+        # Assuming there is a ForeignKey from Comment to Post in your model
+        requirement = self.get_object() 
+        return reverse( 'project-detail', kwargs={
+            'pk': requirement.project.id
+            })
+
+    def get_context_data(self, **kwargs):
+        category_count = get_category_count()
+        most_recent = Project.objects.order_by('-created')[:3]
+        context = super().get_context_data(**kwargs)
+        context['most_recent'] = most_recent
+        context['page_request_var'] = "page"
+        context['category_count'] = category_count
+        return context
+
+
+def get_pdf(request, pk, slug):
+    uid = Project.objects.get(slug__iexact=slug)
     q = Requirement.objects.filter(project=pk)
-    if q.exists():
-        print("id exist")
-        print(q)
-        qn = q.filter(status='A')
-        if qn.exists():
-            print("ini adalah approved requirement : ")        
-            print(qn)
-        data = {
-            'queryset': qn,
-            'title' : uid.title,
-            'object': uid
-        }
+    if uid:
+        if q.exists():
+            qn = q.filter(status='A')
+            data = {
+                'queryset': qn,
+                'title' : uid.title,
+                'overview' : uid.overview,
+                'object': uid,
+                'created' : uid.created,
+                'updated' : uid.updated,
+                'slug' : uid.slug
+            }
+        else:
+            data = {
+                'title' : uid.title,
+                'overview' : uid.overview,
+                'object': uid,
+                'created' : uid.created,
+                'updated' : uid.updated,
+                'slug' : uid.slug
+            }
         pdf = render_to_pdf('pdf/report.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
     else:
         return HttpResponse('<h1>Invalid report link</h1>')
+
+
+def like_project(request, id):
+    project = get_object_or_404(Project,id=id)
+    if project.likes.filter(id=request.user.id).exists():
+        project.likes.remove(request.user)
+    else:
+        project.likes.add(request.user)
+    return HttpResponseRedirect(project.get_absolute_url())
+
+
+def like_project_list(request):
+    user = request.user
+    like_projects = user.likes.all().order_by('-created')
+    context = {
+        'queryset' : like_projects
+    }
+    return render(request, 'search_project_likes.html', context)

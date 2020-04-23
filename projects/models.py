@@ -80,6 +80,7 @@ class Requirement(models.Model):
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True, blank=True, null=True)
     category  = models.CharField(max_length=14, choices=RequirementCategory.RCategories ,null=False, blank=True)
     choose = models.CharField(max_length=18, choices=RequirementCategory.Categories2 ,null=False, blank=True)
     content = models.TextField()
@@ -96,12 +97,14 @@ class Requirement(models.Model):
 
 
 class Project(models.Model):
+    slug = models.SlugField(max_length=255, null=True, blank=True)
     title = models.CharField(max_length=100)
     overview = models.TextField()
     timestamp = models.DateField(auto_now_add=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     content = HTMLField()
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     thumbnail = models.ImageField(upload_to='assets', blank=True, null=True)
     categories = models.ManyToManyField(Category)
@@ -138,12 +141,22 @@ class Project(models.Model):
 
     @property
     def get_requirements(self):
-        return self.requirements.all().order_by('-category')
+        return self.requirements.all().order_by('-timestamp')
 
     @property
     def requirement_count(self):
         return Requirement.objects.filter(project=self).count()
 
     @property
+    def like_count(self):
+        return self.likes.all().count()
+
+    @property
     def view_count(self):
         return ProjectView.objects.filter(project=self).count()
+
+def rl_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+
+pre_save.connect(rl_pre_save_receiver, sender=Project)

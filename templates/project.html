@@ -19,12 +19,23 @@
                 <div class="post-meta d-flex justify-content-between">
                   <div class="category">
                     {% for cat in project.categories.all %}
-                    <a href="#">{{ cat }}</a>
+                    <a>{{ cat }}</a>
                     {% endfor %}
                   </div>
                   {% if project.profile.user.id == request.user.id %}
                   <div class="category d-flex align-items-end">
+                  </div>
+                  <div class="category d-flex align-items-end">
+                  </div>
+                  <div class="category d-flex align-items-end">
+                  </div>
+                  <div class="category d-flex align-items-end">
+                  </div>
+                  <div class="category d-flex align-items-end">
                     <a href="{% url 'project-update' pk=project.pk %}">Update</a>
+                  </div>
+                  <div class="category d-flex align-items-end">
+                    <a href="{% url 'get-pdf' pk=project.pk  slug=project.slug%}">Report</a>
                   </div>
                   {% endif %}
                 </div>
@@ -58,7 +69,14 @@
                           <img src="{{ requirement.user.profile.image.url }}" alt="..." class="img-fluid rounded-circle" style="width: 40px;">
                           {% endif %}
                         </div>
-                        <div class="title"><strong>{{ requirement.user.username }}</strong><span class="date">{{ requirement.timestamp|timesince }} ago</span></div>
+                        <div class="title">
+                          <strong>{{ requirement.user.username }}</strong>
+                          <div class="categorie d-flex align-items-end">
+                            <span class="date">{{ requirement.timestamp|timesince }} ago</span>
+                            <span>&nbsp &nbsp &nbsp</span>
+                            <a href="{% url 'requirement-delete' pk=requirement.pk %}">Delete</a>
+                          </div>
+                        </div>
                       </div>
                       <header>
                         <h3 class="h6">Category is : #<span class="categories">{{requirement.category }}</span><span>_{{requirement.choose }}</span></h3>

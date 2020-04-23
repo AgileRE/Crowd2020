@@ -13,13 +13,18 @@ from projects.views import (
     ProjectDetailView,
     ProjectCreateView,
     ProjectUpdateView,
+    RequirementDeleteView,
     get_pdf,
+    like_project,
+    like_project_list
 )
 from projects import views
 
 urlpatterns = [
     
-    path('pdf/<pk>/', views.get_pdf, name="get-pdf"),
+    path('pdf/<pk>/<slug:slug>/', views.get_pdf, name="get-pdf"),
+    path('like-project/<id>/', views.like_project, name="like-project"),
+    path('like-project-list/', views.like_project_list, name="like-project-list"),
 
     path('admin/', admin.site.urls),
     path('', ProjectListView.as_view(), name='project-list'),
@@ -29,6 +34,7 @@ urlpatterns = [
     path('create/', ProjectCreateView.as_view(), name='project-create'),
     path('project/<pk>/', ProjectDetailView.as_view(), name='project-detail'),
     path('project/<pk>/update/', ProjectUpdateView.as_view(), name='project-update'),
+    path('requirement/<pk>/delete/', RequirementDeleteView.as_view(), name='requirement-delete'),
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.profile, name='profile'),
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),

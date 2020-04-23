@@ -21,9 +21,7 @@ class RequirementAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
-
+        
 class AssetAdmin(admin.ModelAdmin):
     list_display = ('image',)
     search_fields = ('image',)
