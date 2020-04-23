@@ -39,17 +39,38 @@
                   </div>
                   {% endif %}
                 </div>
-                {% if project.thumbnail %}
-              <div class="post-thumbnail"><img src="{{ project.thumbnail.url }}" alt="..." class="img-fluid"></div>
+              {% if project.thumbnail %}
+              <div class="post-thumbnail">
+                <img src="{{ project.thumbnail.url }}" alt="..." class="img-fluid">
+              </div>
               {% endif %}
-                <h1>{{ project.title }}</h1>
+
+              <div class="row">
+                <div class="col-11">
+                  <h1>{{ project.title }}</h1>
+                </div>
+                {% if request.user.is_authenticated %}
+                <div class="col-1">
+                  {% if is_liked %}
+                  <a href="{% url 'like-project' id=project.id %}">
+                    <i class="fa fa-heart fa-2x" aria-hidden="true"></i>
+                  </a>
+                  {% else %}
+                  <a href="{% url 'like-project' id=project.id %}">
+                    <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+                  </a>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+
                 <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
                     <div class="avatar"><img src="{{ project.profile.image.url }}" alt="..." class="img-fluid"></div>
                     <div class="title"><span>{{ project.profile.user.username }}</span></div></a>
                   <div class="d-flex align-items-center flex-wrap">
                     <div class="date"><i class="icon-clock"></i> {{ project.timestamp }}</div>
-                    <div class="views"><i class="icon-eye"></i> {{ project.view_count }}</div>
-                    <div class="comments meta-last"><i class="icon-comment"></i>{{ project.requirement_count }}</div>
+                    <div class="date"><i class="icon-comment"></i>{{ project.requirement_count }}</div>
+                    <div class="comments meta-last"><i class="fa fa-heart-o" aria-hidden="true"></i>{{ project.like_count }}</div>
                   </div>
                 </div>
                 <div class="post-body" style="text-align: justify;">

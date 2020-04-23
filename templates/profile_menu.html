@@ -15,10 +15,10 @@
         <a href="{% url 'search-profile-project' %}">My Project</a>
     </div>
     <div class="item d-flex justify-content-between">
-        <a href="{% qurl '/search-categorie/?page=1' q=cat.categories__title page=None %}">Like</a>
+        <a href="{% url 'like-project-list' %}">Like</a>
     </div>
     <div class="item d-flex justify-content-between">
-        <a href="{% qurl '/search-categorie/?page=1' q=cat.categories__title page=None %}">Contribution</a>
+        <a href="{% url 'search-contribution-project' %}">Contribution</a>
     </div>
     </div>
     </div>

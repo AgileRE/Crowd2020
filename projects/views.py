@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 
 from .forms import RequirementForm, ProjectForm
-from .models import Project, Profile, ProjectView, Requirement, RequirementCategory
+from .models import Project, Profile, ProjectView, Requirement
 from .utils import render_to_pdf
 from account.models import Signup, Account
 
@@ -25,7 +25,6 @@ class SearchProjectProfileView(ListView):
     model = Project
     template_name = 'search_project_profile.html'
     context_object_name = 'queryset'
-    ordering = ['-created']
     paginate_by = 4
 
     def get(self, request, *args, **kwargs):
@@ -33,19 +32,37 @@ class SearchProjectProfileView(ListView):
         query = get_profile(self.request.user)
         
         if query:
-            queryset = queryset.filter(
-                Q(profile__user__username=query))
+            queryset = queryset.filter(profile__user__username=query).order_by('-created')
         context = {
             'queryset': queryset,
         }
         return render(request, 'search_project_profile.html', context)
 
 
+class SearchProjectContributionView(ListView):
+    model = Project
+    template_name = 'search_project_contribution.html'
+    context_object_name = 'queryset'
+    paginate_by = 4
+
+    def get(self, request, *args, **kwargs):
+        queryset = Project.objects.all()
+        query = get_profile(self.request.user)
+        requirement = Requirement.objects.filter(user__username=query).values('project').distinct()
+
+        if query:
+            queryset = queryset.filter(pk__in=requirement).order_by('-created')
+            print(queryset)
+        context = {
+            'queryset': queryset,
+        }
+        return render(request, 'search_project_contribution.html', context)
+
+
 class SearchView(ListView):
     model = Project
     template_name = 'search_results.html'
     context_object_name = 'queryset'
-    ordering = ['-created']
     paginate_by = 4
 
     def get(self, request, *args, **kwargs):
@@ -58,7 +75,7 @@ class SearchView(ListView):
             queryset = queryset.filter(
                 Q(title__icontains=query) |
                 Q(overview__icontains=query)
-            ).distinct()
+            ).distinct().order_by('-created')
         context = {
             'queryset': queryset,
             'most_recent' : most_recent,
@@ -72,7 +89,6 @@ class SearchCategorieView(ListView):
     model = Project
     template_name = 'search_results.html'
     context_object_name = 'queryset'
-    ordering = ['-created']
     paginate_by = 4
 
     def get(self, request, *args, **kwargs):
@@ -83,7 +99,7 @@ class SearchCategorieView(ListView):
         
         if query:
             queryset = queryset.filter(
-                Q(categories__title=query))
+                Q(categories__title=query)).order_by('-created')
         context = {
             'queryset': queryset,
             'most_recent' : most_recent,
@@ -125,6 +141,7 @@ class ProjectDetailView(DetailView):
 
     def get_object(self):
         obj = super().get_object()
+        
         if self.request.user.is_authenticated:
             ProjectView.objects.get_or_create(
                 user=self.request.user,
@@ -133,13 +150,19 @@ class ProjectDetailView(DetailView):
         return obj
 
     def get_context_data(self, **kwargs):
+        project = super().get_object()
         category_count = get_category_count()
         most_recent = Project.objects.order_by('-created')[:3]
+        is_liked = False
+        if project.likes.filter(id=self.request.user.id).exists():
+            is_liked=True
+
         context = super().get_context_data(**kwargs)
         context['most_recent'] = most_recent
         context['page_request_var'] = "page"
         context['category_count'] = category_count
         context['form_req'] = self.form_req
+        context['is_liked'] = is_liked
         return context
 
     def post(self, request, *args, **kwargs):

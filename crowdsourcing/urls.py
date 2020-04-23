@@ -8,6 +8,7 @@ from account import views as user_views
 from projects.views import (
     SearchView,
     SearchProjectProfileView,
+    SearchProjectContributionView,
     SearchCategorieView,
     ProjectListView,
     ProjectDetailView,
@@ -30,6 +31,7 @@ urlpatterns = [
     path('', ProjectListView.as_view(), name='project-list'),
     path('search/', SearchView.as_view(), name='search'),
     path('search-profile-project/', SearchProjectProfileView.as_view(), name='search-profile-project'),
+    path('search-contribution-project/', SearchProjectContributionView.as_view(), name='search-contribution-project'),
     path('search-categorie/', SearchCategorieView.as_view(), name='search-categorie'),
     path('create/', ProjectCreateView.as_view(), name='project-create'),
     path('project/<pk>/', ProjectDetailView.as_view(), name='project-detail'),

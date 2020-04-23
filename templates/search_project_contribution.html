@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div class="container">
+    <div class="container">
       <div class="row">
         <!-- Latest projects -->
         <main class="posts-listing col-lg-8"> 
@@ -16,7 +16,7 @@
                   <div class="post-meta d-flex justify-content-between">
                     <div class="category">
                     {% for cat in project.categories.all %}
-                    <a href="#">{{ cat }}</a>
+                    <a href="">{{ cat }}</a>
                     {% endfor %}
                     </div>
                     <div class="align-items-end">
@@ -26,36 +26,23 @@
                       <p>STATUS-CLOSED</p>
                       {% endif %}
                     </div>
-                  </div>
-                  <a href="{{ project.get_absolute_url }}">
-                    <h3 class="h4">{{ project.title|linebreaks|truncatechars:80 }}</h3>
-                  </a>
+                  </div><a href="{{ project.get_absolute_url }}">
+                    <h3 class="h4">{{ project.title|linebreaks|truncatechars:80 }}</h3></a>
                   <p class="text-muted">{{ project.overview|linebreaks|truncatechars:200 }}</p>
                   <footer class="post-footer d-flex align-items-center">
                     <a href="" class="author d-flex align-items-center flex-wrap">
                       <div class="avatar"><img src="{{ project.profile.image.url }}" alt="..." class="img-fluid"></div>
                       <div class="title"><span>{{ project.profile.user.username }}</span></div>
                     </a>
-                    <div class="date"><i class="icon-clock"></i>{{ project.timestamp }}</div>
+                    <div class="date"><i class="icon-clock"></i>{{ project.timestamp }} </div>
                     <div class="comments meta-last"><i class="icon-comment"></i>{{ project.requirement_count }}</div>
                   </footer>
                 </div>
               </div>
               {% empty %}
-              <h3>Sorry no result for your searching</h3>
+              <h3>You do not contribute yet</h3>
               {% endfor %}
             </div>
-            <!-- Pagination -->
-            <nav aria-label="Page navigation example">
-              <ul class="pagination pagination-template d-flex justify-content-center">
-                {% if queryset.has_previous %}                
-                <li class="page-item"><a href="?{{ page_request_var }}={{ queryset.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
-                {% endif %}
-                {% if queryset.has_next %}
-                <li class="page-item"><a href="?{{ page_request_var }}={{ queryset.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
-                {% endif %}
-              </ul>
-            </nav>
 
             {% if is_paginated %}
             
@@ -74,10 +61,8 @@
             {% endif %}
           </div>
         </main>
-        {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+        {% include 'profile_menu.html' %}
       </div>
     </div>
 
-
-
-{% endblock %}
+{% endblock content %}
