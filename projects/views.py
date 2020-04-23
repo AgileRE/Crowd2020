@@ -153,9 +153,14 @@ class ProjectDetailView(DetailView):
         project = super().get_object()
         category_count = get_category_count()
         most_recent = Project.objects.order_by('-created')[:3]
+
         is_liked = False
         if project.likes.filter(id=self.request.user.id).exists():
             is_liked=True
+
+        is_disliked = False
+        if project.dislikes.filter(id=self.request.user.id).exists():
+            is_disliked=True
 
         context = super().get_context_data(**kwargs)
         context['most_recent'] = most_recent
@@ -163,6 +168,7 @@ class ProjectDetailView(DetailView):
         context['category_count'] = category_count
         context['form_req'] = self.form_req
         context['is_liked'] = is_liked
+        context['is_disliked'] = is_disliked
         return context
 
     def post(self, request, *args, **kwargs):
@@ -268,8 +274,23 @@ def like_project(request, id):
     project = get_object_or_404(Project,id=id)
     if project.likes.filter(id=request.user.id).exists():
         project.likes.remove(request.user)
+    elif project.dislikes.filter(id=request.user.id).exists():
+        project.dislikes.remove(request.user)
+        project.likes.add(request.user)
     else:
         project.likes.add(request.user)
+    return HttpResponseRedirect(project.get_absolute_url())
+
+
+def dislike_project(request, id):
+    project = get_object_or_404(Project,id=id)
+    if project.likes.filter(id=request.user.id).exists():
+        project.likes.remove(request.user)
+        project.dislikes.add(request.user)
+    elif project.dislikes.filter(id=request.user.id).exists():
+        project.dislikes.remove(request.user)
+    else:
+        project.dislikes.add(request.user)
     return HttpResponseRedirect(project.get_absolute_url())
 
 

@@ -46,18 +46,29 @@
               {% endif %}
 
               <div class="row">
-                <div class="col-11">
+                <div class="col-10">
                   <h1>{{ project.title }}</h1>
                 </div>
                 {% if request.user.is_authenticated %}
                 <div class="col-1">
                   {% if is_liked %}
                   <a href="{% url 'like-project' id=project.id %}">
-                    <i class="fa fa-heart fa-2x" aria-hidden="true"></i>
+                    <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
                   </a>
                   {% else %}
                   <a href="{% url 'like-project' id=project.id %}">
-                    <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+                    <i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i>
+                  </a>
+                  {% endif %}
+                </div>
+                <div class="col-1">
+                  {% if is_disliked %}
+                  <a href="{% url 'dislike-project' id=project.id %}">
+                    <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
+                  </a>
+                  {% else %}
+                  <a href="{% url 'dislike-project' id=project.id %}">
+                    <i class="fa fa-thumbs-o-down fa-lg" aria-hidden="true"></i>
                   </a>
                   {% endif %}
                 </div>
@@ -70,7 +81,8 @@
                   <div class="d-flex align-items-center flex-wrap">
                     <div class="date"><i class="icon-clock"></i> {{ project.timestamp }}</div>
                     <div class="date"><i class="icon-comment"></i>{{ project.requirement_count }}</div>
-                    <div class="comments meta-last"><i class="fa fa-heart-o" aria-hidden="true"></i>{{ project.like_count }}</div>
+                    <div class="date"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{ project.like_count }}</div>
+                    <div class="comments meta-last"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i>{{ project.dislike_count }}</div>
                   </div>
                 </div>
                 <div class="post-body" style="text-align: justify;">

@@ -17,6 +17,7 @@ from projects.views import (
     RequirementDeleteView,
     get_pdf,
     like_project,
+    dislike_project,
     like_project_list
 )
 from projects import views
@@ -25,6 +26,7 @@ urlpatterns = [
     
     path('pdf/<pk>/<slug:slug>/', views.get_pdf, name="get-pdf"),
     path('like-project/<id>/', views.like_project, name="like-project"),
+    path('dislike-project/<id>/', views.dislike_project, name="dislike-project"),
     path('like-project-list/', views.like_project_list, name="like-project-list"),
 
     path('admin/', admin.site.urls),

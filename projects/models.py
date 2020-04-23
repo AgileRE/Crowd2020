@@ -105,6 +105,7 @@ class Project(models.Model):
     updated = models.DateTimeField(auto_now=True)
     content = HTMLField()
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
+    dislikes = models.ManyToManyField(User, related_name='dislikes', blank=True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     thumbnail = models.ImageField(upload_to='assets', blank=True, null=True)
     categories = models.ManyToManyField(Category)
@@ -150,6 +151,10 @@ class Project(models.Model):
     @property
     def like_count(self):
         return self.likes.all().count()
+
+    @property
+    def dislike_count(self):
+        return self.dislikes.all().count()
 
     @property
     def view_count(self):
