@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project, Requirement, RequirementCategory
+from .models import Project, Requirement, RequirementCategory, Comment
 from tinymce import TinyMCE
 
 class TinyMCEWidget(TinyMCE):
@@ -32,3 +32,15 @@ class RequirementForm(forms.ModelForm):
     class Meta:
         model = Requirement
         fields = ('content', 'category','choose')
+
+class CommentForm(forms.ModelForm):
+    content = forms.CharField(widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        'placeholder': 'Write suggestions here...',
+        'id': 'user_comment',
+        'rows': 2
+    }), label="")
+
+    class Meta:
+        model = Comment
+        fields = ('content', )
