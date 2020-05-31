@@ -246,16 +246,14 @@ def get_pdf(request, pk, slug):
     if uid:
         if q.exists():
             qn = q.filter(status='A')
-            sn = qn.filter(choose='SystemRequirement', category='NonFunctional')
-            sf = qn.filter(choose='SystemRequirement', category='Functional')
-            un = qn.filter(choose='UserRequirement', category='NonFunctional')
-            uf = qn.filter(choose='UserRequirement', category='Functional')
+            snf = qn.filter(category='Non-functional System')
+            sf = qn.filter(category='Functional System')
+            ur = qn.filter(category='User Requirement')
 
             data = {
-                'sn' : sn,
+                'snf' : snf,
                 'sf' : sf,
-                'un' : un,
-                'uf' : uf,
+                'ur' : ur,
                 'title' : uid.title,
                 'overview' : uid.overview,
                 'object': uid,

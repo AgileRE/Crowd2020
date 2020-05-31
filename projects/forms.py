@@ -23,12 +23,13 @@ class ProjectForm(forms.ModelForm):
 class RequirementForm(forms.ModelForm):
     content = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'form-control',
-        'placeholder': 'Write suggestions here...',
+        'placeholder': 'Write requirement here...',
         'id': 'userrequirement',
         'rows': 2
     }), label="")
-    category = forms.ChoiceField(choices=RequirementCategory.RCategories, required=True )
-    choose= forms.ChoiceField(choices=RequirementCategory.Categories2, required=True )
+    category = forms.ChoiceField(choices=RequirementCategory.RCategories, 
+        required=True, 
+        label="")
     class Meta:
         model = Requirement
-        fields = ('content', 'category','choose')
+        fields = ('content', 'category')

@@ -320,7 +320,7 @@
                 </td>
             </tr>
         </table>
-        <h1 style="font-size: 1.2em">System Requirements</h1>
+        <h1 style="font-size: 1.2em">Requirements</h1>
         <div class="container">
             {% if sf %}
             <div class="table-wrapper">
@@ -328,7 +328,7 @@
                     <tbody class="body">
                         <tr>
                             <tr>
-                            <th class="total" colspan="3">Functional Requirements</th>
+                            <th class="total" colspan="3">Functional System</th>
                             <th class="total">Approved Date</th>
                             <th class="total">Contributed</th>
                         </tr>
@@ -344,17 +344,17 @@
                 </table>
             </div>
             {% endif %}
-            {% if sn %}
+            {% if snf %}
             <div class="table-wrapper">
                 <table>
                     <tbody class="body">
                         <tr>
                             <tr>
-                            <th class="total" colspan="3">Non-Functional Requirements</th>
+                            <th class="total" colspan="3">Non-Functional System</th>
                             <th class="total">Approved Date</th>
                             <th class="total">Contributed</th>
                         </tr>
-                        {% for q in sn %}
+                        {% for q in snf %}
                         <tr>
                             <td class="no">{{ forloop.counter }}</td>
                             <td class="desc" colspan="2">{{ q }}</td>
@@ -366,43 +366,17 @@
                 </table>
             </div>
             {% endif %}
-        </div>
-        <br><br>
-        <h1 style="font-size: 1.2em">User Requirements</h1>
-        <div class="container">
-            {% if uf %}
+            {% if ur %}
             <div class="table-wrapper">
                 <table>
                     <tbody class="body">
                         <tr>
                             <tr>
-                            <th class="total" colspan="3">Functional Requirements</th>
+                            <th class="total" colspan="3">User Requirements</th>
                             <th class="total">Approved Date</th>
                             <th class="total">Contributed</th>
                         </tr>
-                        {% for q in uf %}
-                        <tr>
-                            <td class="no">{{ forloop.counter }}</td>
-                            <td class="desc" colspan="2">{{ q }}</td>
-                            <td class="unit">{{ q.updated }}</td>
-                            <td class="unit">{{ q.user.username }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% endif %}
-            {% if un %}
-            <div class="table-wrapper">
-                <table>
-                    <tbody class="body">
-                        <tr>
-                            <tr>
-                            <th class="total" colspan="3">Non-Functional Requirements</th>
-                            <th class="total">Approved Date</th>
-                            <th class="total">Contributed</th>
-                        </tr>
-                        {% for q in un %}
+                        {% for q in ur %}
                         <tr>
                             <td class="no">{{ forloop.counter }}</td>
                             <td class="desc" colspan="2">{{ q }}</td>

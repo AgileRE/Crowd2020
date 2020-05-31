@@ -62,11 +62,11 @@ class Category(models.Model):
 
 class RequirementCategory(models.Model):
     RCategories = (
-    ('Functional', 'Functional'),
-    ('NonFunctional', 'Non functional'),)
-    Categories2 = (
-    ('UserRequirement', 'User Requirement'),
-    ('SystemRequirement', 'System Requirement'),)
+    ('', '--- Choose Requirement Category ---'),
+    ('Functional System', 'Functional System'),
+    ('Non-functional System', 'Non-functional System'),
+    ('User Requirement', 'User Requirement'),
+    )
 
     def __str__(self):
         return self.r_cat
@@ -80,8 +80,11 @@ class Requirement(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, blank=True, null=True)
-    category  = models.CharField(max_length=14, choices=RequirementCategory.RCategories ,null=False, blank=True)
-    choose = models.CharField(max_length=18, choices=RequirementCategory.Categories2 ,null=False, blank=True)
+    category = models.CharField(max_length=30, 
+        choices=RequirementCategory.RCategories,
+        default='',
+        null=False, 
+        blank=False,)
     content = models.TextField()
     project = models.ForeignKey(
         'Project', related_name='requirements', on_delete=models.CASCADE)

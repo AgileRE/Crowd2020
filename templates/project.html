@@ -111,7 +111,7 @@
                         </div>
                       </div>
                       <header>
-                        <h3 class="h6">#<span class="categories">{{requirement.category }}</span><span>_{{requirement.choose }}</span></h3>
+                        <h3 class="h6">#<span class="categories">{{requirement.category }}</span></h3>
                       </header>
                       {% else %}
                       <div class="user d-flex align-items-center">
@@ -123,7 +123,7 @@
                         </div>
                       </div>
                       <header>
-                        <h3 class="h6">Category is : #<span class="categories">{{requirement.category }}</span><span>_{{requirement.choose }}</span></h3>
+                        <h3 class="h6">#<span class="categories">{{requirement.category }}</span></h3>
                       </header>
                       {% endif %}
                     </div>
@@ -138,7 +138,7 @@
                 {% elif request.user.is_authenticated %}
                 <div class="add-comment">
                   <header>
-                    <h3 class="h6">Give requirements</h3>
+                    <h3 class="h6">Give requirement</h3>
                   </header>
                   {% if error %}
                     <h3 style="color: red">{{ error }}</h3>
@@ -156,7 +156,7 @@
                   </form>
                 </div>
                 {% else %}
-                <a href="{% url 'login' %}" class="btn btn-primary">Login untuk komentar</a>
+                <a href="{% url 'login' %}" class="btn btn-primary">Login for adding requirements</a>
                 {% endif %}
               </div>
             </div>
