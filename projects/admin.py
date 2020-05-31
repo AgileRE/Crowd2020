@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Project, Requirement, ProjectView, Profile, Asset, Comment, RequirementView
+from .models import Category, Project, Requirement, ProjectView, Profile, Asset
 
 
 def approve_requirement(modeladmin,request,queryset):
@@ -35,4 +35,3 @@ admin.site.register(Project)
 admin.site.register(Profile)
 admin.site.register(Asset, AssetAdmin)
 admin.site.register(Requirement, RequirementAdmin)
-admin.site.register(Comment)
