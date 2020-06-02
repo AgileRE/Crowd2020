@@ -21,6 +21,13 @@ class ProjectView(models.Model):
     def __str__(self):
         return self.user.username
 
+class RequirementView(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    requirement = models.ForeignKey('Requirement', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -96,6 +103,31 @@ class Requirement(models.Model):
 
     def __str__(self):
         return self.content
+
+    
+    def get_absolute_url(self):
+        return reverse('requirement-detail', kwargs={
+            'pk': self.pk
+        })
+    
+    @property
+    def get_comments(self):
+        return self.comments.all().order_by('-timestamp')
+
+    @property
+    def comment_count(self):
+        return Comment.objects.filter(requirement=self).count()
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
+    requirement = models.ForeignKey('Requirement', related_name='comments', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{}-{}".format(self.requirement.project, str(self.user.username))
+         
 
 
 class Project(models.Model):

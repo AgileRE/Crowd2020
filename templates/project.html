@@ -107,6 +107,8 @@
                             <span class="date">{{ requirement.timestamp|timesince }} ago</span>
                             <span>&nbsp &nbsp &nbsp</span>
                             <a href="{% url 'requirement-delete' pk=requirement.pk %}">Delete</a>
+                            <span>&nbsp &nbsp &nbsp</span>
+                            <a href="{{ requirement.get_absolute_url }}"> View Discussion</a>
                           </div>
                         </div>
                       </div>
