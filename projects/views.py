@@ -218,6 +218,18 @@ class RequirementDetailView(DetailView):
         if form.is_valid():
             requirement = self.get_object()
             form.instance.user = request.user
+            # parent_obj = None
+            # try:
+            #     parent_id = int(request.POST.get("parent_id"))
+            # except:
+            #     parent_id = None
+            
+            # if parent_id:
+            #     parent_qs = Comment.objects.filter(id=parent_id)
+            #     if parent_qs.exists() and parent_qs.count() == 1:
+            #         parent_obj = parent_qs.first()
+
+            # form.instance.parent = parent_obj
             form.instance.requirement = requirement
             form.save()
 
