@@ -8,8 +8,8 @@ from django.views.generic import View, ListView, DetailView, CreateView, UpdateV
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 
-from .forms import RequirementForm, ProjectForm
-from .models import Project, Profile, ProjectView, Requirement
+from .forms import RequirementForm, ProjectForm, CommentForm
+from .models import Project, Profile, ProjectView, Requirement, Comment, RequirementView
 from .utils import render_to_pdf
 from account.models import Signup, Account
 
@@ -180,6 +180,62 @@ class ProjectDetailView(DetailView):
             form.save()
             return redirect(reverse("project-detail", kwargs={
                 'pk': project.pk
+            }))
+
+class RequirementDetailView(DetailView):
+    model = Requirement
+    template_name = 'project _requirement.html'
+    context_object_name = 'requirement'
+    comments_form = CommentForm()    
+
+    def get_object(self):
+        obj = super().get_object()
+        
+        
+        if self.request.user.is_authenticated:
+            RequirementView.objects.get_or_create(
+                user=self.request.user,
+                requirement=obj
+            )
+        return obj
+
+    def get_context_data(self, **kwargs):
+        requirement = super().get_object()
+        category_count = get_category_count()
+        most_recent = Project.objects.order_by('-created')[:3]
+
+
+        context = super().get_context_data(**kwargs)
+        context['most_recent'] = most_recent
+        context['page_request_var'] = "page"
+        context['category_count'] = category_count
+        context['comments_form'] = self.comments_form
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            requirement = self.get_object()
+            form.instance.user = request.user
+            # parent_obj = None
+            # try:
+            #     parent_id = int(request.POST.get("parent_id"))
+            # except:
+            #     parent_id = None
+            
+            # if parent_id:
+            #     parent_qs = Comment.objects.filter(id=parent_id)
+            #     if parent_qs.exists() and parent_qs.count() == 1:
+            #         parent_obj = parent_qs.first()
+
+            # form.instance.parent = parent_obj
+            form.instance.requirement = requirement
+            form.save()
+
+        
+            return redirect(reverse("requirement-detail", kwargs={
+                'pk': requirement.pk
             }))
    
 
