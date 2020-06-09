@@ -35,6 +35,33 @@
                         <span class="date">{{ requirement.timestamp|timesince }} ago</span>
                         <span class="date">{{ requirement.timestamp }}</span>
                       </div>
+                {% if request.user.is_authenticated %}
+                <div class="col-1">
+                  {% if is_reqliked %}
+                  <a href="{% url 'like-req' pk=requirement.pk %}">
+                    <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                  </a>
+                  {% else %}
+                  <a href="{% url 'like-req' pk=requirement.pk %}">
+                    <i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i>
+                  </a>
+                  {% endif %}
+                  {{ requirement.reqlike_count }}
+                </div>
+                <div class="col-1">
+                  {% if is_reqdisliked %}
+                  <a href="{% url 'dislike-req' pk=requirement.pk %}">
+                    <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
+                  </a>
+                  {% else %}
+                  <a href="{% url 'dislike-req' pk=requirement.pk %}">
+                    <i class="fa fa-thumbs-o-down fa-lg" aria-hidden="true"></i>
+                  </a>
+                  {% endif %}
+                  {{ requirement.reqdislike_count }}
+                </div>
+                {% endif %}
+              </div>
                     </div>
                 {% endif %}
               </div>
@@ -107,7 +134,6 @@
                 </div>
               </div>
             </div>
-          </div>
         </main>
         {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
       </div>

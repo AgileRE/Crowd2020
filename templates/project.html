@@ -131,10 +131,11 @@
                       <p>{{ requirement.content }}</p>
                         <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
                             <div class="d-flex align-items-center flex-wrap">
-                              <div class="comments meta-last"><i class="icon-comment" aria-hidden="true"></i><a href="{{ requirement.get_absolute_url }}"> View Discussion</a></div>
+                              <div class="date"><i class="icon-comment" aria-hidden="true"></i><a href="{{ requirement.get_absolute_url }}"> View Discussion</a></div>
+                              <div class="date"><i class="fa fa-thumbs-o-up"></i>{{ requirement.reqlike_count }}</div>
+                              <div class="date"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i>{{ requirement.reqdislike_count }}</div>
                             </div>
                         </div>
-                      
                     </div>
                   </div>
                   {% endfor %}

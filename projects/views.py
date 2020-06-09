@@ -355,7 +355,28 @@ def dislike_project(request, id):
         project.dislikes.add(request.user)
     return HttpResponseRedirect(project.get_absolute_url())
 
+def like_req(request,pk):
+    requirement = get_object_or_404(Requirement,pk=pk)
+    if requirement.reqlikes.filter(id=request.user.id).exists():
+        requirement.reqlikes.remove(request.user)
+    elif requirement.reqdislikes.filter(id=request.user.id).exists():
+        requirement.reqdislikes.remove(request.user)
+        requirement.reqlikes.add(request.user)
+    else:
+        requirement.reqlikes.add(request.user)
+    return HttpResponseRedirect(requirement.get_absolute_url())
 
+def dislike_req(request,pk):
+    requirement = get_object_or_404(Requirement,pk=pk)
+    if requirement.reqlikes.filter(id=request.user.id).exists():
+        requirement.reqlikes.remove(request.user)
+        requirement.reqdislikes.add(request.user)
+    elif requirement.reqdislikes.filter(id=request.user.id).exists():
+        requirement.reqdislikes.remove(request.user)
+    else:
+        requirement.reqdislikes.add(request.user)
+    return HttpResponseRedirect(requirement.get_absolute_url())
+    
 def like_project_list(request):
     user = request.user
     like_projects = user.likes.all().order_by('-created')
