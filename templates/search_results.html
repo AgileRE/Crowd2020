@@ -6,7 +6,7 @@
 <div class="container">
       <div class="row">
         <!-- Latest projects -->
-        <main class="posts-listing col-lg-8">
+        <main class="posts-listing col-lg-8"> 
           <div class="container">
             <div class="row">
               <!-- project -->
@@ -41,12 +41,14 @@
                   </footer>
                 </div>
               </div>
+              {% empty %}
+              <h3>Sorry no result for your searching</h3>
               {% endfor %}
             </div>
             <!-- Pagination -->
             <nav aria-label="Page navigation example">
               <ul class="pagination pagination-template d-flex justify-content-center">
-                {% if queryset.has_previous %}
+                {% if queryset.has_previous %}                
                 <li class="page-item"><a href="?{{ page_request_var }}={{ queryset.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
                 {% endif %}
                 {% if queryset.has_next %}
@@ -56,10 +58,10 @@
             </nav>
 
             {% if is_paginated %}
-
+            
             <nav aria-label="Page navigation example">
               <ul class="pagination pagination-template d-flex justify-content-center">
-                {% if page_obj.has_previous %}
+                {% if page_obj.has_previous %}                
                 <li class="page-item"><a href="?{{ page_request_var }}={{ page_obj.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
                 {% endif %}
                 <li class="page-item"><a href="?{{ page_request_var }}={{ page_obj.number }}" class="page-link active">{{ page_obj.number }}</a></li>
@@ -68,7 +70,7 @@
                 {% endif %}
               </ul>
             </nav>
-
+            
             {% endif %}
           </div>
         </main>

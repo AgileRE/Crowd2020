@@ -1,0 +1,68 @@
+{% extends 'base_blog.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+      <div class="row">
+        <!-- Latest projects -->
+        <main class="posts-listing col-lg-8"> 
+          <div class="container">
+            <div class="row">
+              <!-- project -->
+              {% for project in queryset %}
+              <div class="post col-xl-6">
+                <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    <div class="category">
+                    {% for cat in project.categories.all %}
+                    <a href="">{{ cat }}</a>
+                    {% endfor %}
+                    </div>
+                    <div class="align-items-end">
+                      {% if project.status_open %}
+                      <p>STATUS-OPEN</p>
+                      {% else %}
+                      <p>STATUS-CLOSED</p>
+                      {% endif %}
+                    </div>
+                  </div><a href="{{ project.get_absolute_url }}">
+                    <h3 class="h4">{{ project.title|linebreaks|truncatechars:80 }}</h3></a>
+                  <p class="text-muted">{{ project.overview|linebreaks|truncatechars:200 }}</p>
+                  <footer class="post-footer d-flex align-items-center">
+                    <a href="" class="author d-flex align-items-center flex-wrap">
+                      <div class="avatar"><img src="{{ project.profile.image.url }}" alt="..." class="img-fluid"></div>
+                      <div class="title"><span>{{ project.profile.user.username }}</span></div>
+                    </a>
+                    <div class="date"><i class="icon-clock"></i>{{ project.timestamp }} </div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>{{ project.requirement_count }}</div>
+                  </footer>
+                </div>
+              </div>
+              {% empty %}
+              <h3>There is no project do you like</h3>
+              {% endfor %}
+            </div>
+
+            {% if is_paginated %}
+            
+            <nav aria-label="Page navigation example">
+              <ul class="pagination pagination-template d-flex justify-content-center">
+                {% if page_obj.has_previous %}                
+                <li class="page-item"><a href="?{{ page_request_var }}={{ page_obj.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                {% endif %}
+                <li class="page-item"><a href="?{{ page_request_var }}={{ page_obj.number }}" class="page-link active">{{ page_obj.number }}</a></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a href="?{{ page_request_var }}={{ page_obj.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                {% endif %}
+              </ul>
+            </nav>
+            
+            {% endif %}
+          </div>
+        </main>
+        {% include 'profile_menu.html' %}
+      </div>
+    </div>
+
+{% endblock content %}
