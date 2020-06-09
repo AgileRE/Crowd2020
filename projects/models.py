@@ -86,6 +86,8 @@ class Requirement(models.Model):
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
+    reqlikes = models.ManyToManyField(User, related_name='reqlikes', blank=True)
+    reqdislikes = models.ManyToManyField(User, related_name='reqdislikes', blank=True)
     updated = models.DateTimeField(auto_now=True, blank=True, null=True)
     category = models.CharField(max_length=30, 
         choices=RequirementCategory.RCategories,
@@ -117,6 +119,15 @@ class Requirement(models.Model):
     @property
     def comment_count(self):
         return Comment.objects.filter(requirement=self).count()
+
+    @property
+    def reqlike_count(self):
+        return self.reqlikes.all().count()
+
+    @property
+    def reqdislike_count(self):
+        return self.reqdislikes.all().count()
+
 
 # class CommentManager(models.Manager):
 #     def all(self):
