@@ -128,7 +128,21 @@
                       {% endif %}
                     </div>
                     <div class="comment-body">
-                      <p>{{ requirement.content }}</p>
+                      <p>{{ requirement.content }}
+                        <form method="POST" action="." class="commenting-form">
+                          {% csrf_token %}
+                          <div class="row">
+                            <div class="form-group col-md-12">
+                            </div>
+                            {% if project.profile.user.id == request.user.id %}
+                            <div class="form-group col-md-12">
+                              <button name="approve" type="submit" value="{{requirement.id}}" class="btn btn-secondary">Approve</button>
+                              <button name="decline" type="submit" value="{{requirement.id}}" class="btn btn-secondary">Decline</button>
+                            </div>
+                            {% endif %}
+                          </div>
+                        </form>
+                      </p>
                         <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
                             <div class="d-flex align-items-center flex-wrap">
                               <div class="date"><i class="icon-comment" aria-hidden="true"></i><a href="{{ requirement.get_absolute_url }}"> View Discussion</a></div>

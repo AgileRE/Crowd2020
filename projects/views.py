@@ -172,12 +172,31 @@ class ProjectDetailView(DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
-        form = RequirementForm(request.POST)
-        if form.is_valid():
+        if 'req' in request.POST:
+            form = RequirementForm(request.POST)
+            if form.is_valid():
+                project = self.get_object()
+                form.instance.user = request.user
+                form.instance.project = project
+                form.save()
+                return redirect(reverse("project-detail", kwargs={
+                    'pk': project.pk
+                }))
+
+        elif 'approve' in request.POST:
             project = self.get_object()
-            form.instance.user = request.user
-            form.instance.project = project
-            form.save()
+            id_req = Requirement.objects.get(id=request.POST.get('approve'))
+            id_req.status = 'A'
+            id_req.save()
+            return redirect(reverse("project-detail", kwargs={
+                'pk': project.pk
+            }))
+
+        elif 'decline' in request.POST:
+            project = self.get_object()
+            id_req = Requirement.objects.get(id=request.POST.get('decline'))
+            id_req.status = 'D'
+            id_req.save()
             return redirect(reverse("project-detail", kwargs={
                 'pk': project.pk
             }))
