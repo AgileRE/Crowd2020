@@ -72,7 +72,6 @@
                 {% for comment in requirement.get_comments %}
                 <div class="comment">
                   <div class="comment-header d-flex justify-content-between">
-                    {% if requirement.user.id == request.user.id %}
                     <div class="user d-flex align-items-center">
                       <div class="image">
                         <img src="{{ requirement.user.profile.image.url }}" alt="..." class="img-fluid rounded-circle" style="width: 40px;">
@@ -84,17 +83,29 @@
                         </div>
                       </div>
                     </div>
-                    {% endif %}
                   </div>
                   <div class="comment-body">
                     <p>{{ comment.content }}</p>
-                    <!-- {% for child_comment in comment.children %}
-                      <blockquote>
+                    {% for child_comment in comment.children %}
+                    <div class="comment">
+                      <div class="comment-header d-flex justify-content-between">
+                        <div class="user d-flex align-items-center">
+                          <div class="image">
+                            <img src="{{ requirement.user.profile.image.url }}" alt="..." class="img-fluid rounded-circle" style="width: 40px;">
+                          </div>
+                          <div class="title"><strong>{{ child_comment.user }}</strong>
+                            <div class="categorie d-flex align-items-end">
+                              <span class="date">{{ child_comment.timestamp|timesince }} ago</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="comment-body">
                         <p>{{ child_comment.content }}</p>
-                        <footer>via {{ child_comment.user }} | {{ child_comment.timestamp|timesince }} ago</footer>
-                      </blockquote>
-                    {% endfor %} -->
-                    <!-- <div class="replied-comments container mt-2">
+                      </div>
+                    </div>
+                    {% endfor %}
+                    <div class="replied-comments container mt-2">
                       <form method="POST" action="." class="commenting-form">
                         {% csrf_token %}
                         <input type="hidden" name="parent_id" value="{{ comment.id }}">
@@ -107,7 +118,7 @@
                           </div>
                         </div>
                       </form>
-                    </div> -->
+                    </div> 
                   </div>
                 </div>
                 {% endfor %}

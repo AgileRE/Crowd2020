@@ -129,17 +129,19 @@ class Requirement(models.Model):
         return self.reqdislikes.all().count()
 
 
-# class CommentManager(models.Manager):
-#     def all(self):
-#         qs = super(CommentManager, self).filter(parent=None)
-#         return qs
+class CommentManager(models.Manager):
+    def all(self):
+        qs = super(CommentManager, self).filter(parent=None)
+        return qs
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     requirement = models.ForeignKey('Requirement', related_name='comments', on_delete=models.CASCADE)
-    # parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies' )
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies' )
+
+    objects = CommentManager()
 
     class Meta:
         ordering = ['-timestamp']
@@ -147,18 +149,16 @@ class Comment(models.Model):
     def __str__(self):
         return "{}-{}".format(self.requirement.project, str(self.user.username))
 
-    # def children (self): #replies
-    #     return Comment.objects.filter(parent=self)
+    def children (self): #replies
+        return Comment.objects.filter(parent=self)
     
-    # @property
-    # def isParent (self):
-    #     if self.parent is not None:
-    #         return False
-    #     return True
+    @property
+    def isParent (self):
+        if self.parent is not None:
+            return False
+        return True
 
          
-
-
 class Project(models.Model):
     slug = models.SlugField(max_length=255, null=True, blank=True)
     title = models.CharField(max_length=100)

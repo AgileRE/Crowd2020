@@ -205,7 +205,7 @@ class RequirementDetailView(DetailView):
     model = Requirement
     template_name = 'project _requirement.html'
     context_object_name = 'requirement'
-    comments_form = CommentForm()    
+    comments_form = CommentForm()   
 
     def get_object(self):
         obj = super().get_object()
@@ -237,18 +237,18 @@ class RequirementDetailView(DetailView):
         if form.is_valid():
             requirement = self.get_object()
             form.instance.user = request.user
-            # parent_obj = None
-            # try:
-            #     parent_id = int(request.POST.get("parent_id"))
-            # except:
-            #     parent_id = None
+            parent_obj = None
+            try:
+                parent_id = int(request.POST.get("parent_id"))
+            except:
+                parent_id = None
             
-            # if parent_id:
-            #     parent_qs = Comment.objects.filter(id=parent_id)
-            #     if parent_qs.exists() and parent_qs.count() == 1:
-            #         parent_obj = parent_qs.first()
+            if parent_id:
+                parent_qs = Comment.objects.filter(id=parent_id)
+                if parent_qs.exists() and parent_qs.count() == 1:
+                    parent_obj = parent_qs.first()
 
-            # form.instance.parent = parent_obj
+            form.instance.parent = parent_obj
             form.instance.requirement = requirement
             form.save()
 
@@ -256,8 +256,8 @@ class RequirementDetailView(DetailView):
             return redirect(reverse("requirement-detail", kwargs={
                 'pk': requirement.pk
             }))
-   
-
+               
+                
 class ProjectCreateView(CreateView):
     model = Project
     template_name = 'project_create.html'
