@@ -136,8 +136,16 @@
                             </div>
                             {% if project.profile.user.id == request.user.id %}
                             <div class="form-group col-md-12">
+                              {% if requirement.status == "A" %}
+                              <button name="approve" type="submit" value="{{requirement.id}}" class="btn btn-success">Approve</button>
+                              <button name="decline" type="submit" value="{{requirement.id}}" class="btn btn-secondary">Decline</button>
+                              {% elif requirement.status == "D" %}
+                              <button name="approve" type="submit" value="{{requirement.id}}" class="btn btn-secondary">Approve</button>
+                              <button name="decline" type="submit" value="{{requirement.id}}" class="btn btn-danger">Decline</button>
+                              {% else %}
                               <button name="approve" type="submit" value="{{requirement.id}}" class="btn btn-secondary">Approve</button>
                               <button name="decline" type="submit" value="{{requirement.id}}" class="btn btn-secondary">Decline</button>
+                              {% endif %}
                             </div>
                             {% endif %}
                           </div>
