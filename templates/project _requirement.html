@@ -27,7 +27,6 @@
                   <h2>{{ requirement.content }}</h2>
                 </div>
               </div>
-                {% if request.user.is_authenticated %}
                 <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
                     <div class="avatar"><img src="{{ requirement.user.profile.image.url }}" alt="..." class="img-fluid"></div>
                     <div class="title"><strong>{{ requirement.user.username }}</strong></div>
@@ -63,7 +62,6 @@
                 {% endif %}
               </div>
                     </div>
-                {% endif %}
               </div>
               <div class="post-comments">
                 <header>
@@ -105,6 +103,7 @@
                       </div>
                     </div>
                     {% endfor %}
+                    {% if request.user.is_authenticated %}
                     <div class="replied-comments container mt-2">
                       <form method="POST" action="." class="commenting-form">
                         {% csrf_token %}
@@ -118,7 +117,8 @@
                           </div>
                         </div>
                       </form>
-                    </div> 
+                    </div>
+                    {% endif %} 
                   </div>
                 </div>
                 {% endfor %}
@@ -128,6 +128,7 @@
                   <header>
                     <h3 class="h6">Give Comments</h3>
                   </header>
+                {% if request.user.is_authenticated %}
                   {% if error %}
                     <h3 style="color: red">{{ error }}</h3>
                   {% endif %}
@@ -142,6 +143,9 @@
                       </div>
                     </div>
                   </form>
+                {% else %}
+                  <a href="{% url 'login' %}" class="btn btn-primary">Login for adding comments</a>
+                {% endif %}
                 </div>
               </div>
             </div>
