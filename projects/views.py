@@ -222,6 +222,13 @@ class RequirementDetailView(DetailView):
         requirement = super().get_object()
         category_count = get_category_count()
         most_recent = Project.objects.order_by('-created')[:3]
+        is_reqliked = False
+        if requirement.reqlikes.filter(id=self.request.user.id).exists():
+            is_reqliked=True
+
+        is_reqdisliked = False
+        if requirement.reqdislikes.filter(id=self.request.user.id).exists():
+            is_reqdisliked=True
 
 
         context = super().get_context_data(**kwargs)
@@ -229,6 +236,8 @@ class RequirementDetailView(DetailView):
         context['page_request_var'] = "page"
         context['category_count'] = category_count
         context['comments_form'] = self.comments_form
+        context['is_reqliked'] = is_reqliked
+        context['is_reqdisliked'] = is_reqdisliked
         return context
     
     def post(self, request, *args, **kwargs):
