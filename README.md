@@ -38,6 +38,8 @@ Django takes the pain out of development by easing common tasks used in many web
 - Menuju browser dengan alamat http://127.0.0.1:8000/
 ```
 Program dapat berjalan dengan tampilan awal sebagai berikut:
+![xxx](https://user-images.githubusercontent.com/42553470/85935729-1d4d8b00-b91e-11ea-88fe-540f7066ebe6.png)
+
 
 ## How It Works
 ```
