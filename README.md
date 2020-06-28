@@ -33,9 +33,9 @@ Django takes the pain out of development by easing common tasks used in many web
 5. Ubah line ke-2 baris koding menjadi import six
 6. Pada command prompt ketikan perintah berikut:
 ```
-a. python manage.py migrate
-b. python manage.py runserver
-c. Menuju browser dengan alamat http://127.0.0.1:8000/
+- python manage.py migrate
+- python manage.py runserver
+- Menuju browser dengan alamat http://127.0.0.1:8000/
 ```
 Program dapat berjalan dengan tampilan awal sebagai berikut:
 
