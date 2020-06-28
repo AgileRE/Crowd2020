@@ -15,24 +15,28 @@ Django takes the pain out of development by easing common tasks used in many web
 ## Installation
 1.	Install Python 3.7.3 (pastikan untuk mencentang add to PATH)
 2.	Pada command prompt ketikan perintah berikut:
-a.	mkdir AgileRE (untuk membuat direktori baru [tidak harus pada disk C:])
-b.	cd AgileRE
-c.	python -m venv env
-d.	git clone https://github.com/AgileRE/Crowd2020.git
-e.	env\scripts\activate.bat
-f.	cd Crowd2020
-g.	pip install -r req.txt
-h.	Tunggu beberapa saat sampai instalasi semua dependensi berhasil
+```
+- mkdir AgileRE (untuk membuat direktori baru [tidak harus pada disk C:])
+- cd AgileRE
+- python -m venv env
+- git clone https://github.com/AgileRE/Crowd2020.git
+- env\scripts\activate.bat
+- cd Crowd2020
+- pip install -r req.txt
+- Tunggu beberapa saat sampai instalasi semua dependensi berhasil
+
+```
 3	Buka file explorer
 4	Menuju alamat:
 [alamat lokal (No.2a)]\ env\Lib\site-packages\qurl_templatetag\qurl.py
 (hal ini dilakukan karena perbedaan python version yang digunakan antara program dengan library yang digunakan -Januari 2020)
 5	Ubah line ke-2 baris koding menjadi import six
 6	Pada command prompt ketikan perintah berikut:
-a.	python manage.py migrate
-b.	python manage.py runserver
-c.	Menuju browser dengan alamat http://127.0.0.1:8000/
-
+```
+a. python manage.py migrate
+b. python manage.py runserver
+c. Menuju browser dengan alamat http://127.0.0.1:8000/
+```
 Program dapat berjalan dengan tampilan awal sebagai berikut:
 
 ## How It Works
