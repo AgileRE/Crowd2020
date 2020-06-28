@@ -26,12 +26,12 @@ Django takes the pain out of development by easing common tasks used in many web
 - Tunggu beberapa saat sampai instalasi semua dependensi berhasil
 
 ```
-3	Buka file explorer
-4	Menuju alamat:
+3. Buka file explorer
+4. Menuju alamat:
 [alamat lokal (No.2a)]\ env\Lib\site-packages\qurl_templatetag\qurl.py
 (hal ini dilakukan karena perbedaan python version yang digunakan antara program dengan library yang digunakan -Januari 2020)
-5	Ubah line ke-2 baris koding menjadi import six
-6	Pada command prompt ketikan perintah berikut:
+5. Ubah line ke-2 baris koding menjadi import six
+6. Pada command prompt ketikan perintah berikut:
 ```
 a. python manage.py migrate
 b. python manage.py runserver
