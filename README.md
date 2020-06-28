@@ -1,5 +1,5 @@
 
-## CROWDSOURCING (incomplete)
+## CROWDSOURCING
 Crowdsourcing adalah sebuah istilah yang sering digunakan untuk menggambarkan suatu proses dalam mendapatkan pekerjaan atau pendanaan dari sekelompok orang dalam jumlah banyak melalui fasilitas online. Konsep yang digunakan untuk menjalankan teknik ini adalah dengan tersedianya orang-orang dalam kelompok besar untuk menghasilkan konten atau pendanaan
 Ruang lingkup dari project ini yaitu untuk membuat aplikasi sosial media crowdsourcing berbasis website dengan bahasa pemrograman Python, menggunakan database SQL Lite, dan framework Django
 
@@ -28,7 +28,7 @@ Django takes the pain out of development by easing common tasks used in many web
 ```
 3. Buka file explorer
 4. Menuju alamat:
-[alamat lokal (No.2a)]\ env\Lib\site-packages\qurl_templatetag\qurl.py
+- [alamat lokal (No.2a)]\ env\Lib\site-packages\qurl_templatetag\qurl.py
 (hal ini dilakukan karena perbedaan python version yang digunakan antara program dengan library yang digunakan -Januari 2020)
 5. Ubah line ke-2 baris koding menjadi import six
 6. Pada command prompt ketikan perintah berikut:
